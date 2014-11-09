@@ -39,33 +39,58 @@
             top:0px;
             left:0px;
             }
+            #button2 {
+            height:80px;
+            width:80%;
+            border: 8px solid #333;
+            background-color: #471e59;
+            color:#f1f1f1;
+            font-family: helvetica;
+            font-weight: bold;
+            font-size: 2em;
+            border-radius: 30px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            }
             body {
                 background-color: #fff;
             }
             #length, #width, #height    {   width: 90%; }
             td              {   width: 50%; text-align: center;}
 
-            #sweets             {   height: 90px;    width: 90%; background-image: url("http://bendouek.com/images/foodwaste/sweets.png"); background-height: 100%; background-repeat: no-repeat; margin: 0 auto; background-position: center;    margin-top: 0px;        }
+            #sweets             {   height: 98px;    width: 90%; background-image: url("http://bendouek.com/images/foodwaste/sweets.png"); background-height: 100%; background-repeat: no-repeat; margin: 0 auto; background-position: center;    margin-top: 0px;        }
 
-            #meats              {   height: 90px;    width: 90%; background-image: url("http://bendouek.com/images/foodwaste/meats.png"); background-height: 100%; background-repeat: no-repeat; margin: 0 auto; background-position: center; margin-top: 0px;    }
+            #meats              {   height: 98px;    width: 90%; background-image: url("http://bendouek.com/images/foodwaste/meats.png"); background-height: 100%; background-repeat: no-repeat; margin: 0 auto; background-position: center; margin-top: 0px;    }
 
-            #fruits             {   height: 90px;    width: 90%; background-image: url("http://bendouek.com/images/foodwaste/fruits.png"); background-height: 100%; background-repeat: no-repeat; margin: 0 auto; background-position: center;    margin-top: 0px;        }
+            #fruits             {   height: 98px;    width: 90%; background-image: url("http://bendouek.com/images/foodwaste/fruits.png"); background-height: 100%; background-repeat: no-repeat; margin: 0 auto; background-position: center;    margin-top: 0px;        }
 
-            #grains             {   height: 90px;    width: 90%; background-image: url("http://bendouek.com/images/foodwaste/grains.png"); background-height: 100%; background-repeat: no-repeat; margin: 0 auto; background-position: center;    margin-top: 0px;}
+            #grains             {   height: 98px;    width: 90%; background-image: url("http://bendouek.com/images/foodwaste/grains.png"); background-height: 100%; background-repeat: no-repeat; margin: 0 auto; background-position: center;    margin-top: 0px;}
 
-            #foodtable          {   width: 100%;    margin: 0 auto; margin-top: 13px;margin-bottom: 15px; }
+            #foodtable          {   width: 98%;    margin: 0 auto; margin-top: 22px; margin-bottom: 15px; text-align:center; font-size: 1.4em;}
+            #txtbx{
+                margin-left:1em; border:2px solid #222; font-size:1.5em; font-family:helvetica;
+            }
         </style>
 
         <script src="https://maps.googleapis.com/maps/api/js"></script>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
         <script>
-        function saveXMLMarker(lat,lng){
-            //alert("http://bendouek.com/dumpsterPost.php?lat="+parseFloat(lat)+"&lng="+parseFloat(lng));
-            $.get("http://bendouek.com/dumpsterPost.php?lat="+parseFloat(lat)+"&lng="+parseFloat(lng),function(data,status){
-                alert("Status: " + status);
-                var xmlDoc = jQuery.parseXML(data);
-            });
-        }
+
+         takePicture: function() {
+                  navigator.camera.getPicture( function( imageURI ) {
+                    alert( imageURI );
+                  },
+                  function( message ) {
+                    alert( message );
+                  },
+                  {
+                    quality: 50,
+                    destinationType: Camera.DestinationType.FILE_URI
+                  });
+                }
+
 
             document.getElementById('bk').setAttribute("style", "width: " + window.innerWidth + "px ; height:"+ window.innerHeight +"px ;");
 
@@ -75,26 +100,73 @@
 
     <body>
         <div id="bk" syle="background-color:#f1f1f1">
-                <a href="index.html" id="button"><img src="http://bendouek.com/images/button_back.svg" width="76"/></a>
-           
+                <a href="index1.html" id="button"><img src="http://bendouek.com/images/button_back.svg" width="76"/></a>
+           <br>
+           <div id="cameraStream" style="width:90%;height:300px; background-color:#bbb;margin-left:5%;margin-top:10px;border-radius:10px;border: 1px solid #333;"></div>
+           <br>
+            <center><div onclick="app.takePicture();"><img src="http://bendouek.com/images/cam.png" width="100"/></div></center>
+            <br><br>
+            <textarea rows="10" cols="31" id="txtbx">Give a brief description of this waste site and it's surroundings. Tell us about your expirience(s) with this location. 
+            </textarea>
+
+            <br><br><br>
+           <center><h1>Food Groups Found</h1></center>
             <div id="foodtable">
-                <div id="sweets" onClick="select(1)"></div>
-                <div id="meats" onClick="select(2)"></div>
-                <div id="fruits" onClick="select(3)"></div>
-                <div id="grains" onClick="select(4)"></div>
+                <div id="sweets" onClick="select(1)"></div><br>
+                <div id="meats" onClick="select(2)"></div><br>
+                <div id="fruits" onClick="select(3)"></div><br>
+                <div id="grains" onClick="select(4)"></div><br>
             </div> 
+            <br><br>
+            <center><h1>Volume Estimate</h1></center>
             <div id="form">
                 <form>
-                    <input id="length" type="range" min="0" max="108" step="12">Length</input> <br />
-                    <input id="width" type="range"  min="0" max="108" step="12">Width</input> <br />
-                    <input id="height" type="range" min="0" max="108" step="12">Height</input> <br />
+                    <center>
+                    <h2>Length</h2><p id="slide1">0</p>
+                    <input id="length" type="range" min="0" value="0" max="10" step="1"  onchange="showValue3(this.value)"></input> <br />
+                    <h2>Width</h2><p id="slide2">0</p>
+                    <input id="width" type="range"  min="0" value="0" max="10" step="1" onchange="showValue2(this.value)"></input> <br />
+                    <h2>Height</h2><p id="slide3">0</p>
+                    <input id="height" type="range" min="0" value="0" max="10" step="1" onchange="showValue1(this.value)"></input> <br />
+                    <p>vol:</p>
+                    <h2 id="vol">0</h2><p>ft^3</p>
+                    </center>
                 </form>
-                <form action="">
-                    <input type="radio" name="Waste" value="Edible">Usable</input>
-                    <input type="radio" name="Waste" value="Inedible">Unusuable</input>
+                <br><br>
+                <form action="" style="text-align:center;">
+                    <center><h1>Condition</h1></center>
+                    <input type="radio" name="Waste" value="Edible"><h2>Usable</h2></input>
+                    <input type="radio" name="Waste" value="Inedible"><h2>Unusuable</h2></input>
                 </form>
+                <br><br>
+                <center><button id="button2" onclick="getPosition()">Tag Location</button></center><br><br>
             </div>
             <script>
+
+            function showValue1(newValue)
+            {
+                document.getElementById("slide3").innerHTML=newValue;
+                calc();
+
+            }
+            function showValue2(newValue)
+            {
+                document.getElementById("slide2").innerHTML=newValue;
+                calc();
+            }
+            function showValue3(newValue)
+            {
+                document.getElementById("slide1").innerHTML=newValue;
+                calc();
+            }
+            function calc () {
+                var result = 0;
+                var a = parseInt(document.getElementById("slide1").innerHTML);
+                var b = parseInt(document.getElementById("slide2").innerHTML);
+                var c = parseInt(document.getElementById("slide3").innerHTML);
+                result = a*b*c;
+                document.getElementById("vol").innerHTML = result;
+            }
                 var sweets_selected = 0;
                 var meats_selected = 0;
                 var fruits_selected = 0;
@@ -145,6 +217,36 @@
 
         <script type="text/javascript" src="phonegap.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
+
+        <script>
+        function saveXMLMarker(lat,lng){
+            //alert("http://bendouek.com/dumpsterPost.php?lat="+parseFloat(lat)+"&lng="+parseFloat(lng));
+            $.get("http://bendouek.com/dumpsterPost.php?lat="+parseFloat(lat)+"&lng="+parseFloat(lng),function(data,status){
+                alert("Status: " + status);
+                var xmlDoc = jQuery.parseXML(data);
+            });
+            window.location = 'index1.html';
+        }
+
+        var onSuccess = function(position) {
+            //alert('Latitude: '  + position.coords.latitude   + '\n' +
+            //      'Longitude: ' + position.coords.longitude  + '\n');
+            var myLat = position.coords.latitude;
+            var myLong = position.coords.longitude;
+            saveXMLMarker(myLat,myLong);
+
+            
+        };
+
+        function onError(error) {
+            alert('code: '    + error.code    + '\n' +
+                  'message: ' + error.message + '\n');
+        }
+
+        function getPosition() {
+            navigator.geolocation.getCurrentPosition(onSuccess, onError,{'  enableHighAccuracy':true,'timeout':10000});
+        }
+        </script>
     </body>
 
 </html>

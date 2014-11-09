@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+        <meta name="format-detection" content="telephone=no" />
+
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+
+        <link rel="stylesheet" type="text/css" href="css/index.css" />  
+
+        <title>FoodFinder</title>
+
+        <style>
+          #map_canvas {
+            position: absolute;
+            top:0px;
+            left:0px;
+            z-index: 0;
+            width: 360px;
+            height: 780px;
+          }
+          #button {
+            position: fixed;
+            z-index:100;
+            bottom:0px;
+            right:0px;
+            height:80px;
+            width:80%;
+            border-left: 8px solid #333;
+            border-top: 8px solid #333;
+            background-color: #471e59;
+            color:#f1f1f1;
+            font-family: helvetica;
+            font-weight: bold;
+            font-size: 2em;
+            border-top-left-radius: 30px;
+          }
+          .modalDialog {
+            position: fixed;
+            font-family: Helvetica, sans-serif;
+            font-size: 2em;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgba(100,100,100,0.8);
+            z-index: 99999;
+            opacity:0;
+            -webkit-transition: opacity 400ms ease-in;
+            -moz-transition: opacity 400ms ease-in;
+            transition: opacity 400ms ease-in;
+            pointer-events: none;
+        }
+
+        .modalDialog:target {
+            opacity:1;
+            pointer-events: auto;
+        }
+
+        .modalDialog > div {
+            width: 80%;
+            height: 80%;
+            position: relative;
+            margin: 10% auto;
+            padding: 5px 20px 13px 20px;
+            border-radius: 10px;
+            background: #ccc;
+            background: -moz-linear-gradient(#fff, #f1f1f1);
+            background: -webkit-linear-gradient(#fff, #f1f1f1);
+            background: -o-linear-gradient(#fff, #f1f1f1);
+        }
+
+        .close {
+            background: #000;
+            color: #FFFFFF;
+            line-height: 25px;
+            position: absolute;
+            right: -10px;
+            text-align: center;
+            top: -2px;
+            width: 34px;
+            text-decoration: none;
+            font-weight: bold;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius: 20px;
+            -moz-box-shadow: 1px 1px 3px #471e59;
+            -webkit-box-shadow: 1px 1px 3px #471e59;
+            box-shadow: 1px 1px 3px #471e59;
+        }
+
+        .close:hover { background: #471e59; }
+
+        a {text-decoration: none; color:#333;}
+
+        .modalbutton {
+            font-family: Helvetica, sans-serif;
+            text-transform: lowercase; 
+            border: 4px solid #333;
+            color:#fff;
+            background-color: #471e59;
+            border-radius:8px; 
+            padding:5px 5px 5px 5px;
+        }
+
+
+        </style>
+
+        <script src="https://maps.googleapis.com/maps/api/js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script>
+            var map;
+            var dumpsterPin = new google.maps.MarkerImage(
+                "http://bendouek.com/images/dumpsterlocal.svg",
+                null, /* size is determined at runtime */
+                null, /* origin is 0,0 */
+                null, /* anchor is bottom center of the scaled image */
+                new google.maps.Size(42, 68)
+            ); 
+
+
+            function initialize() {
+                var mapCanvas = document.getElementById('map_canvas');
+                map_canvas.setAttribute("style", "width: " + window.innerWidth + "px ; height:"+ window.innerHeight +"px ;");
+                var mapOptions = {
+                  center: new google.maps.LatLng(43.5302514, -80.2284909),
+                  zoom: 14,
+                  mapTypeId: google.maps.MapTypeId.ROADMAP
+                }
+                map = new google.maps.Map(mapCanvas, mapOptions)
+                loadXMLFile();
+                getPosition();
+              }
+            function loadXMLFile(){
+                $.get("http://bendouek.com/dumpsterServer.php",function(data,status){
+                //alert("Data: " + data + "\nStatus: " + status);
+                var xmlDoc = jQuery.parseXML(data);
+                parseXML(xmlDoc);
+            });
+
+            function parseXML(xml){
+                var bounds = new google.maps.LatLngBounds();
+                    $(xml).find("location").each(function(){
+                        //Read the name, address, latitude and longitude for each Marker
+                        var lat = $(this).find('lat').text();
+                        var lng = $(this).find('lng').text();
+                        //alert(lat);
+                        var markerCoords = new google.maps.LatLng(parseFloat(lng), 
+                                                                  parseFloat(lat));
+                        bounds.extend(markerCoords);
+                        var marker = new google.maps.Marker({position: markerCoords, title: 'Waste Site', icon:dumpsterPin, map:map});
+                    });
+                    map.fitBounds(bounds);
+                    map.setZoom(14);
+                }
+            }
+
+
+            google.maps.event.addDomListener(window, 'load', initialize);
+        </script>
+
+    </head>
+
+    <body>
+
+        <div id="map_canvas"></div>
+        <a href="#openModal"><button id="button" onclick="getPosition()">Tag Waste</button></a>
+        <script type="text/javascript" src="phonegap.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+
+        <div id="openModal" class="modalDialog">
+            <div>
+                <a href="#close" title="Close" class="close">X</a>
+                <h2>Notify Network</h2>
+                <a href="quickTag.html"><p class="modalbutton">Notify others in the area about food at risk of going to waste!</p></a>
+                <a href="survey.html"><p class="modalbutton">Collect data about a food waste site</p></a>
+            </div>
+        </div>
+
+
+        <script type="text/javascript">
+        var newMarkers = 1;
+        var oldMarkers = 0;
+
+        function getXMLMarkers(){
+            $.get("http://bendouek.com/dumpsterServer.php",function(data,status){
+                //alert("Data: " + data + "\nStatus: " + status);
+                var xmlDoc = jQuery.parseXML(data);
+                parseXML(xmlDoc);
+            });
+          function parseXML(xml){
+            var bounds = new google.maps.LatLngBounds();
+                $(xml).find("location").each(function(){
+                    //Read the name, address, latitude and longitude for each Marker
+                    var lat = $(this).find('lat').text();
+                    var lng = $(this).find('lng').text();
+                    newMarkers += 1;
+                    var markerCoords = new google.maps.LatLng(parseFloat(lng), 
+                                                              parseFloat(lat));
+                    bounds.extend(markerCoords);
+                    var marker = new google.maps.Marker({position: markerCoords, title: 'Waste Site',icon:dumpsterPin, map:map});
+                });
+                map.fitBounds(bounds);
+                map.setZoom(14);
+            }
+        }
+        function saveXMLMarker(lat,lng){
+            //alert("http://bendouek.com/dumpsterPost.php?lat="+parseFloat(lat)+"&lng="+parseFloat(lng));
+            $.get("http://bendouek.com/dumpsterPost.php?lat="+parseFloat(lat)+"&lng="+parseFloat(lng),function(data,status){
+                alert("Status: " + status);
+                var xmlDoc = jQuery.parseXML(data);
+            });
+        }
+        var onSuccess = function(position) {
+            //alert('Latitude: '  + position.coords.latitude   + '\n' +
+            //      'Longitude: ' + position.coords.longitude  + '\n');
+            var myLat = position.coords.latitude;
+            var myLong = position.coords.longitude;
+            //saveXMLMarker(myLat,myLong);
+
+            var myLatlng = new google.maps.LatLng(myLat,myLong);
+            //MAP
+            var mapOptions = {
+                center: myLatlng,
+                zoom: 14,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+            var goldStar = {
+                path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
+                fillColor: 'yellow',
+                fillOpacity: 0.8,
+                scale: 0.2,
+                strokeColor: 'gold',
+                strokeWeight: 2
+            };
+            var marker = new google.maps.Marker({
+              position: myLatlng,
+              icon: goldStar,
+              map: map,
+              title: 'YouAreHere'
+            });
+            loadXMLFile();
+        };
+        var saveSuccess = function(position) {
+            //alert('Latitude: '  + position.coords.latitude   + '\n' +
+            //      'Longitude: ' + position.coords.longitude  + '\n');
+            var myLat = position.coords.latitude;
+            var myLong = position.coords.longitude;
+            saveXMLMarker(myLat,myLong);
+
+            var myLatlng = new google.maps.LatLng(myLat,myLong);
+            //MAP
+            var mapOptions = {
+                center: myLatlng,
+                zoom: 14,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+            var goldStar = {
+                path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
+                fillColor: 'yellow',
+                fillOpacity: 0.8,
+                scale: 0.2,
+                strokeColor: 'gold',
+                strokeWeight: 2
+            };
+            var marker = new google.maps.Marker({
+              position: myLatlng,
+              icon: goldStar,
+              map: map,
+              title: 'YouAreHere'
+            });
+            loadXMLFile();
+        };
+        function onError(error) {
+            alert('code: '    + error.code    + '\n' +
+                  'message: ' + error.message + '\n');
+        }
+        function getPosition() {
+            navigator.geolocation.getCurrentPosition(onSuccess, onError,{'  enableHighAccuracy':true,'timeout':10000});
+        }
+        function savePosition() {
+            navigator.geolocation.getCurrentPosition(saveSuccess, onError,{'  enableHighAccuracy':true,'timeout':10000});
+        }
+
+        function playAudio() {
+            var my_media = new Media("/android_asset/www/bell.mp3",
+                    // success callback
+                     function () { console.log("playAudio():Audio Success"); },
+                    // error callback
+                     function (err) { console.log("playAudio():Audio Error: " + err); }
+            );
+                   // Play audio
+            my_media.play();
+        }
+
+        setInterval(function(){
+            if(newMarkers > oldMarkers){
+                playAudio();
+            }
+            newMarkers = oldMarkers;
+        }, 30000);
+        </script>
+
+
+
+    </body>
+
+</html>
