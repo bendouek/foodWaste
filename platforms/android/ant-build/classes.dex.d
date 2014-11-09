@@ -3,6 +3,9 @@
 /home/ben/Desktop/newapp/newapp/platforms/android/ant-build/classes/org/apache/cordova/deviceorientation/CompassListener$1.class \
 /home/ben/Desktop/newapp/newapp/platforms/android/ant-build/classes/org/apache/cordova/devicemotion/AccelListener.class \
 /home/ben/Desktop/newapp/newapp/platforms/android/ant-build/classes/org/apache/cordova/devicemotion/AccelListener$1.class \
+/home/ben/Desktop/newapp/newapp/platforms/android/ant-build/classes/org/apache/cordova/camera/ExifHelper.class \
+/home/ben/Desktop/newapp/newapp/platforms/android/ant-build/classes/org/apache/cordova/camera/FileHelper.class \
+/home/ben/Desktop/newapp/newapp/platforms/android/ant-build/classes/org/apache/cordova/camera/CameraLauncher.class \
 /home/ben/Desktop/newapp/newapp/platforms/android/ant-build/classes/com/phonegap/helloworld/R.class \
 /home/ben/Desktop/newapp/newapp/platforms/android/ant-build/classes/com/phonegap/helloworld/R$xml.class \
 /home/ben/Desktop/newapp/newapp/platforms/android/ant-build/classes/com/phonegap/helloworld/R$string.class \

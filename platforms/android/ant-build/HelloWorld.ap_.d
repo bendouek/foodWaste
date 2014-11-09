@@ -16,10 +16,12 @@
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/js \
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/spec \
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/icon.png \
+/home/ben/Desktop/newapp/newapp/platforms/android/assets/www/quickTag.html \
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/cordova.js \
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/cordova_plugins.js \
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/index.html \
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/css \
+/home/ben/Desktop/newapp/newapp/platforms/android/assets/www/survey.html \
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/plugins \
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/phonegap.js \
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/spec.html \
@@ -36,8 +38,14 @@
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/spec/lib/jasmine-1.2.0/jasmine-html.js \
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/spec/lib/jasmine-1.2.0/jasmine.css \
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/css/index.css \
+/home/ben/Desktop/newapp/newapp/platforms/android/assets/www/plugins/org.apache.cordova.camera \
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/plugins/org.apache.cordova.device-motion \
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/plugins/org.apache.cordova.device-orientation \
+/home/ben/Desktop/newapp/newapp/platforms/android/assets/www/plugins/org.apache.cordova.camera/www \
+/home/ben/Desktop/newapp/newapp/platforms/android/assets/www/plugins/org.apache.cordova.camera/www/CameraConstants.js \
+/home/ben/Desktop/newapp/newapp/platforms/android/assets/www/plugins/org.apache.cordova.camera/www/CameraPopoverOptions.js \
+/home/ben/Desktop/newapp/newapp/platforms/android/assets/www/plugins/org.apache.cordova.camera/www/Camera.js \
+/home/ben/Desktop/newapp/newapp/platforms/android/assets/www/plugins/org.apache.cordova.camera/www/CameraPopoverHandle.js \
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/plugins/org.apache.cordova.device-motion/www \
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/plugins/org.apache.cordova.device-motion/www/Acceleration.js \
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/plugins/org.apache.cordova.device-motion/www/accelerometer.js \
@@ -45,6 +53,8 @@
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/plugins/org.apache.cordova.device-orientation/www/CompassHeading.js \
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/plugins/org.apache.cordova.device-orientation/www/CompassError.js \
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/plugins/org.apache.cordova.device-orientation/www/compass.js \
+/home/ben/Desktop/newapp/newapp/platforms/android/assets/www/img/personlocal.svg \
+/home/ben/Desktop/newapp/newapp/platforms/android/assets/www/img/dumpsterlocal.svg \
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/img/logo.png \
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/res/icon \
 /home/ben/Desktop/newapp/newapp/platforms/android/assets/www/res/screen \

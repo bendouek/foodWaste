@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+        <meta name="format-detection" content="telephone=no" />
+
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+
+        <link rel="stylesheet" type="text/css" href="css/index.css" />  
+
+        <title>FoodFinder</title>
+        <style>
+          #button {
+            position: fixed;
+            z-index:100;
+            top:0px;
+            left:0px;
+            }
+            body {
+                background-color: #fff;
+            }
+            #length, #width, #height    {   width: 90%; }
+            td              {   width: 50%; text-align: center;}
+
+            #sweets             {   height: 90px;    width: 90%; background-image: url("http://bendouek.com/images/foodwaste/sweets.png"); background-height: 100%; background-repeat: no-repeat; margin: 0 auto; background-position: center;    margin-top: 0px;        }
+
+            #meats              {   height: 90px;    width: 90%; background-image: url("http://bendouek.com/images/foodwaste/meats.png"); background-height: 100%; background-repeat: no-repeat; margin: 0 auto; background-position: center; margin-top: 0px;    }
+
+            #fruits             {   height: 90px;    width: 90%; background-image: url("http://bendouek.com/images/foodwaste/fruits.png"); background-height: 100%; background-repeat: no-repeat; margin: 0 auto; background-position: center;    margin-top: 0px;        }
+
+            #grains             {   height: 90px;    width: 90%; background-image: url("http://bendouek.com/images/foodwaste/grains.png"); background-height: 100%; background-repeat: no-repeat; margin: 0 auto; background-position: center;    margin-top: 0px;}
+
+            #foodtable          {   width: 100%;    margin: 0 auto; margin-top: 13px;margin-bottom: 15px; }
+        </style>
+
+        <script src="https://maps.googleapis.com/maps/api/js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script>
+        function saveXMLMarker(lat,lng){
+            //alert("http://bendouek.com/dumpsterPost.php?lat="+parseFloat(lat)+"&lng="+parseFloat(lng));
+            $.get("http://bendouek.com/dumpsterPost.php?lat="+parseFloat(lat)+"&lng="+parseFloat(lng),function(data,status){
+                alert("Status: " + status);
+                var xmlDoc = jQuery.parseXML(data);
+            });
+        }
+
+            document.getElementById('bk').setAttribute("style", "width: " + window.innerWidth + "px ; height:"+ window.innerHeight +"px ;");
+
+        </script>
+
+    </head>
+
+    <body>
+        <div id="bk" syle="background-color:#f1f1f1">
+                <a href="index.html" id="button"><img src="http://bendouek.com/images/button_back.svg" width="76"/></a>
+           
+            <div id="foodtable">
+                <div id="sweets" onClick="select(1)"></div>
+                <div id="meats" onClick="select(2)"></div>
+                <div id="fruits" onClick="select(3)"></div>
+                <div id="grains" onClick="select(4)"></div>
+            </div> 
+            <div id="form">
+                <form>
+                    <input id="length" type="range" min="0" max="108" step="12">Length</input> <br />
+                    <input id="width" type="range"  min="0" max="108" step="12">Width</input> <br />
+                    <input id="height" type="range" min="0" max="108" step="12">Height</input> <br />
+                </form>
+                <form action="">
+                    <input type="radio" name="Waste" value="Edible">Usable</input>
+                    <input type="radio" name="Waste" value="Inedible">Unusuable</input>
+                </form>
+            </div>
+            <script>
+                var sweets_selected = 0;
+                var meats_selected = 0;
+                var fruits_selected = 0;
+                var grains_selected = 0;
+                
+                function select(num){ 
+                    if(num==1){
+                        if(!sweets_selected){
+                            sweets_selected=1;
+                            document.getElementById("sweets").style.backgroundImage="url('http://bendouek.com/images/foodwaste/sweets2.png')";
+                        } else {
+                            sweets_selected=0;
+                            document.getElementById("sweets").style.backgroundImage="url('http://bendouek.com/images/foodwaste/sweets.png')"; 
+                        }
+                    }
+                    else if(num==2){
+                        if(!meats_selected){
+                            meats_selected=1;
+                            document.getElementById("meats").style.backgroundImage="url('http://bendouek.com/images/foodwaste/meats2.png')";
+                        } else {
+                            meats_selected=0;
+                            document.getElementById("meats").style.backgroundImage="url('http://bendouek.com/images/foodwaste/meats.png')"; 
+                        }
+                    }
+                    else if(num==3){
+                        if(!fruits_selected){
+                            fruits_selected=1;
+                            document.getElementById("fruits").style.backgroundImage="url('http://bendouek.com/images/foodwaste/fruits2.png')";
+                        } else {
+                            fruits_selected=0;
+                            document.getElementById("fruits").style.backgroundImage="url('http://bendouek.com/images/foodwaste/fruits.png')"; 
+                        }
+                    }
+                    else if(num==4) {
+                        if(!grains_selected){
+                            grains_selected=1;
+                            document.getElementById("grains").style.backgroundImage="url('http://bendouek.com/images/foodwaste/grains2.png')";
+                        } else {
+                            grains_selected=0;
+                            document.getElementById("grains").style.backgroundImage="url('http://bendouek.com/images/foodwaste/grains.png')"; 
+                        };
+                    }
+                }
+
+            </script>
+
+        </div>
+
+        <script type="text/javascript" src="phonegap.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+    </body>
+
+</html>

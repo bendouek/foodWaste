@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<html>
+
+    <head>
+
+        <meta charset="utf-8" />
+
+        <meta name="format-detection" content="telephone=no" />
+
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+
+        <link rel="stylesheet" type="text/css" href="css/index.css" />  
+
+        <title>FoodFinder</title>
+        <style>
+          #button {
+            position: fixed;
+            z-index:100;
+            top:0px;
+            left:0px;
+            }
+            body {
+                background-color: #fff;
+            }
+            #button2 {
+            height:80px;
+            width:80%;
+            border: 8px solid #333;
+            background-color: #471e59;
+            color:#f1f1f1;
+            font-family: helvetica;
+            font-weight: bold;
+            font-size: 2em;
+            border-radius: 30px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            }
+        </style>
+
+        <script src="https://maps.googleapis.com/maps/api/js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script>
+        
+
+         takePicture: function() {
+          navigator.camera.getPicture( function( imageURI ) {
+            alert( imageURI );
+          },
+          function( message ) {
+            alert( message );
+          },
+          {
+            quality: 50,
+            destinationType: Camera.DestinationType.FILE_URI
+          });
+        }
+
+
+            document.getElementById('bk').setAttribute("style", "width: " + window.innerWidth + "px ; height:"+ window.innerHeight +"px ;");
+
+        </script>
+
+    </head>
+
+    <body>
+        <div id="bk" syle="background-color:#f1f1f1">
+            <a href="index.html" id="button"><img src="http://bendouek.com/images/button_back.svg" width="76"/></a>
+            
+            <div id="cameraStream" style="width:90%;height:300px; background-color:#bbb;margin-left:5%;margin-top:10px;border-radius:10px;border: 1px solid #333;"></div>
+
+            <center><div onclick="app.takePicture();"><img src="http://bendouek.com/images/cam.png" width="100"/></div></center>
+
+            <textarea rows="6" cols="40" style="margin-left:1em;">Give a breif discription of the food being offered and why it is at risk of being wasted! Get others to help you finish off food from a campus event! Found a dumpster full of food? Share the bounty! 
+            </textarea>
+
+            <center><button id="button2" onclick="getPosition()">Tag Location</button></center>
+
+        </div>
+
+        <script type="text/javascript" src="phonegap.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script>
+        function saveXMLMarker(lat,lng){
+            //alert("http://bendouek.com/dumpsterPost.php?lat="+parseFloat(lat)+"&lng="+parseFloat(lng));
+            $.get("http://bendouek.com/dumpsterPost.php?lat="+parseFloat(lat)+"&lng="+parseFloat(lng),function(data,status){
+                alert("Status: " + status);
+                var xmlDoc = jQuery.parseXML(data);
+            });
+            window.location = 'index.html';
+        }
+
+        var onSuccess = function(position) {
+            //alert('Latitude: '  + position.coords.latitude   + '\n' +
+            //      'Longitude: ' + position.coords.longitude  + '\n');
+            var myLat = position.coords.latitude;
+            var myLong = position.coords.longitude;
+            saveXMLMarker(myLat,myLong);
+
+            
+        };
+
+        function onError(error) {
+            alert('code: '    + error.code    + '\n' +
+                  'message: ' + error.message + '\n');
+        }
+
+        function getPosition() {
+            navigator.geolocation.getCurrentPosition(onSuccess, onError,{'  enableHighAccuracy':true,'timeout':10000});
+        }
+        </script>
+    </body>
+
+</html>
